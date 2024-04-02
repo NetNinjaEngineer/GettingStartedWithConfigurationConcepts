@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using GettingStartedWithConfigurationConcepts.Helpers;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GettingStartedWithConfigurationConcepts.Controllers
 {
@@ -34,6 +35,16 @@ namespace GettingStartedWithConfigurationConcepts.Controllers
             var featuresFlagSection = _configuration.GetSection("AppSettings:FeatureFlags");
             var newUserRegistration = featuresFlagSection["NewUserRegistration"];
             return Ok(newUserRegistration);
+        }
+
+        [HttpGet("BindingConfiguration")]
+        public IActionResult BindingConfiguration()
+        {
+            var appsettings = new AppSettings();
+            _configuration.Bind("AppSettings", appsettings);
+
+            var featuresFlagSection = appsettings.FeatureFlags;
+            return Ok(featuresFlagSection.AdvancedSearch);
         }
     }
 }
