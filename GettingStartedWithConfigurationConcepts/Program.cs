@@ -9,6 +9,10 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
+#region Validate Options By Implementing IValidateOptions Interface
+//builder.Services.AddSingleton<IValidateOptions<AppSettings>, AppSettingsConfigurationValidation>();
+#endregion
+
 #region Using Named Options with IOptionsSnapshot and IOptionsMonitor
 builder.Services.Configure<ExternalServicesConfiguration>(Constants.WeatherApi, builder.Configuration.GetSection("ExternalServices:WeatherApi"));
 builder.Services.Configure<ExternalServicesConfiguration>(Constants.ProductsApi, builder.Configuration.GetSection("ExternalServices:ProductsApi"));
