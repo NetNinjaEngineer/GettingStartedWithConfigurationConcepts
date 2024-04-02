@@ -8,6 +8,14 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
+#region Using Named Options with IOptionsSnapshot and IOptionsMonitor
+builder.Services.Configure<ExternalServicesConfiguration>(Constants.WeatherApi, builder.Configuration.GetSection("ExternalServices:WeatherApi"));
+builder.Services.Configure<ExternalServicesConfiguration>(Constants.WeatherApi, builder.Configuration.GetSection("ExternalServices:ProductsApi"));
+
+#endregion
+
+builder.Services.AddHttpClient();
+
 var app = builder.Build();
 
 if (app.Environment.IsDevelopment())
