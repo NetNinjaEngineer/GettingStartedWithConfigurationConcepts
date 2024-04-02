@@ -1,3 +1,4 @@
+using GettingStartedWithConfigurationConcepts;
 using GettingStartedWithConfigurationConcepts.Helpers;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,18 +10,23 @@ builder.Services.AddSwaggerGen();
 builder.Services.Configure<AppSettings>(builder.Configuration.GetSection("AppSettings"));
 
 #region Using Named Options with IOptionsSnapshot and IOptionsMonitor
-//builder.Services.Configure<ExternalServicesConfiguration>(Constants.WeatherApi, builder.Configuration.GetSection("ExternalServices:WeatherApi"));
+builder.Services.Configure<ExternalServicesConfiguration>(Constants.WeatherApi, builder.Configuration.GetSection("ExternalServices:WeatherApi"));
 builder.Services.Configure<ExternalServicesConfiguration>(Constants.ProductsApi, builder.Configuration.GetSection("ExternalServices:ProductsApi"));
 
 #endregion
 
 #region Validate Options Using Data Annotations
-builder.Services.AddOptions<ExternalServicesConfiguration>()
-    .Bind(builder.Configuration.GetSection("ExternalServices:WeatherApi"))
+builder.Services.AddOptions<AppSettings>()
+    .Bind(builder.Configuration.GetSection("AppSettings"))
     .ValidateDataAnnotations();
 #endregion
 
 builder.Services.AddHttpClient();
+
+#region Implemented ValidationOptionsBackgroundService To Handle Our Validation Options
+builder.Services.AddHostedService<ValidationOptionsBackgroundService>();
+#endregion
+
 
 var app = builder.Build();
 
