@@ -23,5 +23,14 @@ namespace GettingStartedWithConfigurationConcepts.Controllers
             return Ok(environment);
         }
 
+
+        [HttpGet("GetNestedSectionUsingOptions")]
+        public IActionResult GetNestedSectionUsingOptions()
+        {
+            var featuresFlagSection = _appSettings.FeatureFlags;
+            var newUserRegisteration = featuresFlagSection.NewUserRegistration;
+            return Ok(newUserRegisteration);
+        }
+
     }
 }
