@@ -6,14 +6,9 @@ namespace GettingStartedWithConfigurationConcepts.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OptionsSnapshotController : ControllerBase
+    public class OptionsSnapshotController(IOptionsSnapshot<AppSettings> optionsSnapshot) : ControllerBase
     {
-        private readonly AppSettings _appSettings;
-
-        public OptionsSnapshotController(IOptionsSnapshot<AppSettings> optionsSnapshot)
-        {
-            _appSettings = optionsSnapshot.Value;
-        }
+        private readonly AppSettings _appSettings = optionsSnapshot.Value;
 
         [HttpGet("ReloadConfiguration")]
         public IActionResult ReloadConfiguration()

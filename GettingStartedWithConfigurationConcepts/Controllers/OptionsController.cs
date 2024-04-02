@@ -6,14 +6,9 @@ namespace GettingStartedWithConfigurationConcepts.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class OptionsController : ControllerBase
+    public class OptionsController(IOptions<AppSettings> options) : ControllerBase
     {
-        private readonly AppSettings _appSettings;
-
-        public OptionsController(IOptions<AppSettings> options)
-        {
-            _appSettings = options.Value;
-        }
+        private readonly AppSettings _appSettings = options.Value;
 
         [HttpGet("GetEnviromentByOptionsPattern")]
         public IActionResult GetEnviromentByOptionsPattern()
